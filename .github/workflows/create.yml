@@ -1,0 +1,51 @@
+name: Build Project
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'javav'
+          java-version: '17'
+          cache: maven
+
+      - name: Build and test with maven
+        run: mvn -B package --file pom.xml
+
+      - name: Build and push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v1
+        with:
+          image: liHanroot/persons-image
+          tags: v1
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Deploy
+        if: github.ref == 'refs/heads/master'
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl "$deploy_url"
+        
+      - name: Run API Tests
+        uses : matt-ball/newman-action@master
+        with:
+          collection: postman/[inst] Lab1.postman_collection.json
+          environment: postman/[inst][heroku] Lab1.postman_environment.json
+          delayRequest: 100
+          reporters: '[ "cli" ]'
+
+
+
+
+
+
