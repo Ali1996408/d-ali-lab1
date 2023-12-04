@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-cl7pb9avokcc73aommmg-a.frankfurt-postgres.render.com/lab1_fsbs
+    username: lab1_fsbs_user
+    password: js9pmkqdkBx28rUlpGYuHFtl7Gwzqm9d
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
