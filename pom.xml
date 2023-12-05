@@ -85,7 +85,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>persons-image</finalName>
+        <finalName>lab1</finalName>
     </build>
 
 </project>
