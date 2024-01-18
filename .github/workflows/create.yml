@@ -23,7 +23,7 @@ jobs:
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: lihanroot/lab1
+          image: alikermani96/lab1
           tags: v1
           registry: docker.io
           dockerfile: Dockerfile
